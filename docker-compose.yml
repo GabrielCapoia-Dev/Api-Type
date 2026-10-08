@@ -45,7 +45,7 @@ services:
     image: phpmyadmin
     restart: unless-stopped
     ports:
-      - "127.0.0.1:8989:80"
+      - "8989:80"
     environment:
       PMA_HOST: db
       PMA_PORT: 3306
