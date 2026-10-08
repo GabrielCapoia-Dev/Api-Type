@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { AppController } from '../Controller/app.controller.js';
-import { AppService } from '../Service/app.service.js';
+import { AppController } from './app.controller.js';
+import { AppService } from './app.service.js';
 import { SequelizeModule } from '@nestjs/sequelize';
 
 @Module({
@@ -9,9 +9,9 @@ import { SequelizeModule } from '@nestjs/sequelize';
       dialect: 'mysql',
       host: 'db',
       port: 3306,
-      username: 'root',
-      password: 'root',
-      database: 'test',
+      username: '${DATABASE_USER}',
+      password: '${DATABASE_PASSWORD}',
+      database: '${DATABASE_NAME}',
       models: [],
     })
   ],
