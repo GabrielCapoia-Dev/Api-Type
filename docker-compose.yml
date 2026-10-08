@@ -4,12 +4,10 @@ services:
   api-type:
     build:
       context: .
-      dockerfile: Dockerfile.production
+      dockerfile: Dockerfile
     image: api-type
     ports:
       - "3000:3000"
-    depends_on:
-      - DATABASE_URL: ${DATABASE_URL}
 
   db:
     image: mysql:8.0
