@@ -32,10 +32,10 @@ services:
     healthcheck:
       test:
         - CMD-SHELL
-        - MYSQL_PWD="$${MYSQL_ROOT_PASSWORD}" mysqladmin ping -h 127.0.0.1 -u root --silent"
+        - MYSQL_PWD="$${MYSQL_ROOT_PASSWORD}" mysqladmin ping -h 127.0.0.1 -u root --silent
       interval: 10s
       timeout: 5s
-      retries: 3
+      retries: 10
       start_period: 30s
     networks:
       - api-type
