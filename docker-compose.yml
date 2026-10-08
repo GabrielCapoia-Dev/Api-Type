@@ -40,3 +40,7 @@ services:
 
 volumes:
   db_data:
+
+networks:
+  api-type:
+    driver: bridge
