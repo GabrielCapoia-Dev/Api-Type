@@ -7,6 +7,12 @@ services:
     image: api-type
     ports:
       - "3000:3000"
+    environment:
+      PORT: ${PORT}
+      DATABASE_URL: ${DATABASE_URL}
+    depends_on:
+      db:
+        condition: service_healthy
     networks:
       - api-type
 
@@ -23,6 +29,14 @@ services:
       - "3306:3306"
     volumes:
       - ./db_data:/var/lib/mysql
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - MYSQL_PWD="$${MYSQL_ROOT_PASSWORD}" mysqladmin ping -h 127.0.0.1 -u root --silent"
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
     networks:
       - api-type
 
@@ -32,7 +46,7 @@ services:
     ports:
       - "8989:80"
     environment:
-      PMA_HOST: ${DATABASE_HOST}
+      PMA_HOST: db
       PMA_PORT: ${DATABASE_PORT}
       MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
     networks:
