@@ -8,6 +8,8 @@ services:
     image: api-type
     ports:
       - "3000:3000"
+    networks:
+      - api-type
 
   db:
     image: mysql:8.0
@@ -22,6 +24,8 @@ services:
       - "3306:3306"
     volumes:
       - ./db_data:/var/lib/mysql
+    networks:
+      - api-type
 
   phpmyadmin:
     image: phpmyadmin
@@ -32,6 +36,8 @@ services:
       PMA_HOST: ${DATABASE_HOST}
       PMA_PORT: ${DATABASE_PORT}
       MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
+    networks:
+      - api-type
 
 volumes:
   db_data:
