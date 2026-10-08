@@ -1,32 +1,33 @@
-# Use the official Node.js image as the base image
+
 FROM node:24-slim
 
-# Set the working directory inside the container
 WORKDIR /usr/src/app
 
 # Dependências de sistema
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends openssl && \
+    apt-get install -y --no-install-recommends \
+    openssl \
+    ca-certificates && \
     rm -rf /var/lib/apt/lists/*
 
-# Copiar arquivos de dependências
+# Instalar dependências
 COPY package.json package-lock.json ./
 
-# Install the application dependencies
 RUN npm ci
 
-# Copy the rest of the application files
+# Copiar aplicação
 COPY . .
 
-# Generate Prisma Client
+# Gerar Prisma Client
 RUN npx prisma generate
 
-# Build the NestJS application
+# Compilar NestJS
 RUN npm run build
 
-# Expose the application port
+# Dar permissão ao script de inicialização
+RUN chmod +x docker-entrypoint.sh
+
 EXPOSE 3000
 
-# Command to run the application
-CMD ["npm", "run", "start:prod"]
-
+# Aplicar migrações e iniciar a API
+CMD ["sh", "./docker-entrypoint.sh"]
