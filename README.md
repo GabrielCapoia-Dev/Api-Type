@@ -57,6 +57,36 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+## Person and user registration
+
+`POST /persons` creates a person without an associated user:
+
+```json
+{
+  "name": "Ada Lovelace",
+  "cpf": "12345678901"
+}
+```
+
+`POST /users` creates a person and its associated user in the same Sequelize transaction:
+
+```json
+{
+  "name": "Ada Lovelace",
+  "cpf": "12345678901",
+  "email": "ada@example.com"
+}
+```
+
+The shared abstract registration service holds the person data rules; the person and
+user services implement the same `create` contract with their respective behavior.
+The database models use a one-to-one relation, not table inheritance: every user
+references one person, while a person may have no user.
+
+The application connects to MySQL through `DATABASE_URL`. Sequelize synchronizes
+the registered models at startup to create missing tables; use versioned migrations
+instead of automatic synchronization when evolving a production database.
+
 ## Deployment
 
 When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
