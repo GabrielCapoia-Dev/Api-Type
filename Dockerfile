@@ -18,9 +18,6 @@ RUN npm ci
 # Copiar aplicação
 COPY . .
 
-# Gerar Prisma Client
-RUN npx prisma generate
-
 # Compilar NestJS
 RUN npm run build
 
