@@ -2,10 +2,11 @@ import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
-import { PersonsModule } from './persons/persons.module.js';
-import { Person } from './persons/person.model.js';
-import { User } from './users/user.model.js';
-import { UsersModule } from './users/users.module.js';
+
+import { PersonsModule } from './app/persons/persons.module.js';
+import { Person } from './app/persons/person.model.js';
+import { User } from './app/users/user.model.js';
+import { UsersModule } from './app/users/users.module.js';
 
 @Module({
   imports: [
